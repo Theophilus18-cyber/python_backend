@@ -1,0 +1,130 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User API",
+    "description": "API for managing users",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5000",
+  "schemes": ["http"],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Add a new user",
+        "description": "Add a new user to the database",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "description": "Name of the user"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "required": true,
+            "description": "Email of the user"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to /users"
+          },
+          "400": {
+            "description": "Name and email are required"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "description": "Retrieve a user by their ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "type": "integer",
+            "required": true,
+            "description": "ID of the user to fetch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user by ID",
+        "description": "Delete a user by their ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "type": "integer",
+            "required": true,
+            "description": "ID of the user to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
